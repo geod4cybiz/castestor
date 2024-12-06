@@ -1,0 +1,13 @@
+{% extends "cas/cas_base.xml" %}
+{% block content %}
+<cas:authenticationSuccess>
+    <cas:user>{{username}}</cas:user>
+    {% if attributes %}
+    <cas:attributes>
+    	{% for item in attributes %}
+    	<cas:{{item.name}}>{{ item.value }}</cas:{{item.name}}>
+    	{% endfor%}
+    </cas:attributes>
+    {% endif %}
+</cas:authenticationSuccess>
+{% endblock %}

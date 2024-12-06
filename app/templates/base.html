@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>{% block title %}{% endblock %} -  Cyberlibris Content Manager</title>
+	<link rel="icon" type="image/ico" href="https://www.cyberlibris.com/favicon.ico" />
+	{% block head %}
+	<link type="text/css" href="/static/css/style.css" media="screen" rel="stylesheet" />
+	<link type="text/css" href="/static/lib/ajax.collapse.div.css" media="screen" rel="stylesheet" />
+	<style>
+		.msg_body {
+			padding:0px;
+		}
+		.flashes {
+			color:red;
+		}
+	</style>
+
+	{% endblock %}
+</head>
+<body>
+<div id="header">
+	<h1><a href="/"><img src="/static/images/logo.jpg" alt="Cyberlibris ALEXANDRIE" /></a></h1>
+	<div class="langBlock">
+
+    <a href="#"><img src="/static/images/lang_fr.png" alt="Fran&ccedil;ais" /></a>
+	<a href="#"><img src="/static/images/lang_en.png" alt="English" /></a>	
+	</div>
+	<div class="logBlock">
+	{% if current_user.is_authenticated %}
+	{{ current_user.securitylevel }} 
+	| {{ current_user.firstname }} {{ current_user.name }}
+	| <a href="/logout">Logout</a>
+	{% endif %}	
+	</div>
+</div>
+{% if current_user.is_authenticated %}
+{% block menu %}
+<div id="menu">
+	<ul>
+		<li class="leftCorner"></li>
+		<li><a href="/">{{ _('Home') }}</a></li>
+		<li><a href="/site">{{ _('Sites') }}</a></li>
+		<li><a href="/module">{{ _('Modules') }}</a></li>
+		<li><a href="/content">{{ _('Documents') }}</a></li>
+		<li><a href="/newsletter">{{ _('Newsletter') }}</a></li>
+		<li><a href="/webinars">{{ _('Webinars') }}</a></li>
+		<li class="rightCorner"></li>
+</div>
+{% endblock %}
+{% endif %}
+<div>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+</div>
+<div class="content">{% block content %}{% endblock %}</div>
+<div style="clear:both"></div>
+<div id="footer">
+	<span>
+		<ul>
+	    	<li>&copy; <a href="http://www.cyberlibris.com" target="_blank">Cyberlibris</a></li>
+	    </ul>
+    </span>
+</div>
+<script type="text/javascript" src="/static/lib/jquery-1.11.2.min.js"></script>
+{% block javascripts %}
+{% endblock%}
+</body>
+</html>

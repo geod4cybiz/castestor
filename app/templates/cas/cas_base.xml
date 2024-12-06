@@ -1,0 +1,3 @@
+<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>
+	{% block content %}{%endblock%}
+</cas:serviceResponse>

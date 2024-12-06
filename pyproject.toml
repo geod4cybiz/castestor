@@ -1,0 +1,17 @@
+[project]
+name = "castestor"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "flask-sqlalchemy>=3.1.1",
+    "flask>=3.1.0",
+    "python-dotenv>=1.0.1",
+    "gunicorn>=23.0.0",
+    "flask-login>=0.6.3",
+    "itsdangerous>=2.2.0",
+    "pyjwt>=2.10.1",
+    "flask-wtf>=1.2.2",
+    "flask-babel>=4.0.0",
+]

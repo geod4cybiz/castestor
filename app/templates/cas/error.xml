@@ -1,0 +1,6 @@
+{% extends "cas/cas_base.xml" %}
+{% block content %}
+<cas:authenticationFailure code="{{error.code}}">
+    {{error.message}}
+</cas:authenticationFailure>
+{% endblock %}
