@@ -1,34 +1,30 @@
-{% extends "base.html" %}
+{% extends "base_bs.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="warning" style="display:none;margin:30px;padding:10px;background: white;font-size: 1.2em;">	
-	<h3>Avertissement: changements sur le mode d'authentification</h3>
-	<p>A partir du Lundi 21/09/2020, l'authentification via le compte Cyberlibris.biz sera obligatoire.<br/>
-	L'authenfication locale par nom d'utilisateur et mot de passe sera supprimée.
-	</p>
-</div>
-<div style="margin:30px;">
-<A href="/saml-sp/?sso">Se connecter avec son compte Cyberlibris.biz &#8599;</A>
-</div>
-{% if show_form %}
-<div>
-<form enctype="application/x-www-form-urlencoded" action="/login" method="post">
-<dl class="zend_form">
-	{% if error %}
-	<dt><label>{{ error }}</label></dt>
-	{% endif %}
-	<dt id="username-label"><label for="username" class="required">{{ _('Username') }}:</label></dt>
-	<dd id="username-element">
-	<input name="username" id="username" value="{{form.username.data if form.username.data != None }}" size="30" type="text"></dd>
-	<dt id="password-label"><label for="password" class="required">{{_('Password') }}:</label></dt>
-	<dd id="password-element">
-	<input name="password" id="password" value="" size="30" type="password"></dd>
-	<dt id="submit-label">&nbsp;</dt>
-	<dd id="submit-element">
-	<input name="submit" id="submit" value="Submit" type="submit">
-	</dd>
-</dl>
-</form>
-</div>
-{% endif %}
+	<form enctype="application/x-www-form-urlencoded" action="/login" method="post">
+	  <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+	  {% if error %}
+	  	<div class="form-floating">
+		{{ error }}
+		</div>
+	  {% endif %}
+	
+	  <div class="form-floating">
+		<input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+		<label for="floatingInput">{{ _('Username') }}</label>
+	  </div>
+	  <div class="form-floating">
+		<input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+		<label for="floatingPassword">Password</label>
+	  </div>
+  
+	  <div class="form-check text-start my-3">
+		<input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+		<label class="form-check-label" for="flexCheckDefault">
+		  Remember me
+		</label>
+	  </div>
+	 <input class="btn btn-primary w-100 py-2" name="submit" id="submit" value="Sign in" type="submit">
+	</form>
+  
 {% endblock %}

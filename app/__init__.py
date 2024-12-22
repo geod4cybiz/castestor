@@ -28,11 +28,12 @@ logger = app.logger
 
 db = SQLAlchemy(app)
 
-
-
 from app.cas.views import urls as cas_urls,login as cas_login,logout as cas_logout
 app.register_blueprint(cas_urls)
 
 
 babel = Babel(app)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return cas_login()

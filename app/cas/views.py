@@ -70,9 +70,8 @@ def login():
 			return redirect('%s?ticket=%s' % (service,t))
 		else:
 			error = 'Wrong username and/or password'
-
-	show_form= 'localhost' in request.host
-	return render_template('login.html', form=form, error=error,show_form=show_form)
+	app.logger.info(error)
+	return render_template('login.html', form=form, error=error)
 
 @urls.route('/serviceValidate')
 @xmlresponse
