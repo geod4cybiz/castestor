@@ -1,55 +1,35 @@
-from app import db
+from app import app,db
 from datetime import datetime
 from sqlalchemy import (
     text, Column, ForeignKey, Integer, String,DateTime,Text, Boolean
 )
 from passlib.hash import bcrypt
 
-class Group(db.Model):
-    __bind_key__ = 'users'
-    __tablename__ = 'cas_group'
-    __table_args__ = {'extend_existing': True}
 
-    id = db.Column(Integer, primary_key = True)
-    name = db.Column(String, nullable = False)
-    descr = db.Column(String)
-
-    datecreated = db.Column(DateTime, nullable = False, default = datetime.now())
-
-
-user_group = db.Table('cas_user_group',
-    db.Column('groupid', db.Integer, db.ForeignKey('cas_group.id')),
-    db.Column('userid', db.Integer, db.ForeignKey('cas_user.id')),
-    info={'bind_key':'users'},
-    extend_existing= True
-)
 
 class User(db.Model):
-    __bind_key__ = 'users'
-    __tablename__ = 'cas_user'
+    __tablename__ = 'auth_user'
     __table_args__ = {'extend_existing': True}
 
     id = db.Column(Integer, primary_key = True)
-    name = db.Column(String, nullable = False)
-    firstname = db.Column(String, nullable = False)
+    name = db.Column(String)
+    firstname = db.Column(String)
 
-    username = db.Column(String, nullable = False)
+    email = db.Column(String, nullable = False,unique=True)
     password_hash = db.Column(String, nullable = False)
-    email = db.Column(String, nullable = False)
 
-    securitylevel = db.Column(String, nullable = False)
-    active = db.Column(Boolean, nullable= False)
+    active = db.Column(Boolean, nullable= False, default = True)
 
-    groups = db.relationship('Group', secondary=user_group, backref=db.backref('users', lazy='dynamic')) 
 
+    datecreated = db.Column(DateTime, nullable = False, default = datetime.now())
 
     @property
     def password(self):
         return self.password_hash
 
     @password.setter
-    def passsword(self,value):
-        self.password_hash = bcrypt(value)
+    def password(self,value):
+        self.password_hash = bcrypt.hash(value)
 
 
     @property
@@ -68,6 +48,30 @@ class User(db.Model):
 
     def is_anonymous(self):
         return False
+
+
+
+
+
+
+def initdb(reset=False):
+    if reset:
+        db.drop_all()
+
+    db.create_all()
+
+    g_user = User(email='guest@example.com')
+    g_user.password='justpassingby'
+
+    db.session.add(g_user)
+    db.session.commit()
+
+    db.session.flush()
+
+
+if __name__ == '__main__':
+    with app.app_context():
+        initdb(reset=True)
 
 
 
