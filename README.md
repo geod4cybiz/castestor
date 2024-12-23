@@ -31,6 +31,8 @@ flask run --debug
 ```
 open your browser on http://localhost:5000/
 
-To test the CAS protocol flow , 
+To test the CAS protocol flow call http://locahost:5000/cas/login
+See also tests/cas.py
+
 
 
