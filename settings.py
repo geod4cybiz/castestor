@@ -19,12 +19,13 @@ SQLALCHEMY_POOL_TIMEOUT = 5
 SQLALCHEMY_POOL_RECYCLE = 1
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+DATA_DIR = os.environ.get('DATA_DIR',os.path.join(os.path.dirname(__file__),'data'))
+if not os.path.isdir(DATA_DIR):
+	os.makedirs(DATA_DIR)
 
-DATA_DIR = os.path.join(os.path.dirname(__file__),'data')
 LOG_DIR = os.path.join(DATA_DIR,'logs')
 if not os.path.isdir(LOG_DIR):
 	os.makedirs(LOG_DIR)
-
 
 CACHE_TYPE='FileSystemCache'
 CACHE_KEY_PREFIX = 'CAST_'

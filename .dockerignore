@@ -1,0 +1,18 @@
+deploy/*
+data/*
+app.log
+tests/*
+.DS_Store
+config/*
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+instance/
+
+# Virtual environments
+.venv
+

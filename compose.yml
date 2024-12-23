@@ -1,0 +1,17 @@
+services:
+  castestor:
+    build: .
+    container_name: castestor
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    environment:
+      BIND_ADDRESS: "0.0.0.0"
+
+    command: "sh run.sh"
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3" 
+    # restart: always
