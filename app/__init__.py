@@ -6,9 +6,9 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
 from flask_login import current_user
+from flask_caching import Cache
 
 app = Flask(__name__)
-
 app.config.from_object('settings')
 
 
@@ -23,11 +23,13 @@ file_handler.setFormatter(Formatter(
 ))
 
 app.logger.addHandler(file_handler)
+
 app.jinja_env.add_extension('jinja2.ext.do')
 
 logger = app.logger
 
 db = SQLAlchemy(app)
+cache = Cache(app,config=app.config)
 
 from app.cas.views import urls as cas_urls,login as cas_login,logout as cas_logout
 app.register_blueprint(cas_urls)

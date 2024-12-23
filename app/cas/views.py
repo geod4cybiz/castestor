@@ -13,10 +13,11 @@ import jwt
 from app import app
 
 from app.cas.forms import LoginForm
-# from app.cas.security import SessionManagerInterface
+from app.cas.security import gen_ticket,decode_ticket
+
 from app.cas.models import User
 
-from flask_login import (LoginManager,login_required, login_user, logout_user)
+from flask_login import (LoginManager, login_user, logout_user)
 
 from passlib.hash import bcrypt
 
@@ -38,16 +39,16 @@ def load_user(userid):
     user = User.query.filter_by(id=userid).first()
     return user
 
-def gen_ticket(user,service,timeout=60):
-    exp = int(time()) + timeout
+# def gen_ticket(user,service,timeout=60):
+#     exp = int(time()) + timeout
 
-    data = { 'userid':user.id , 'service': service ,'exp': exp}
-    ticket = jwt.encode(data,app.secret_key,algorithm='HS256')
-    return ticket
+#     data = { 'userid':user.id , 'service': service ,'exp': exp}
+#     ticket = jwt.encode(data,app.secret_key,algorithm='HS256')
+#     return ticket
 
-def decode_ticket(ticket):
-    data = jwt.decode(ticket,app.secret_key, algorithms=['HS256'])
-    return data
+# def decode_ticket(ticket):
+#     data = jwt.decode(ticket,app.secret_key, algorithms=['HS256'])
+#     return data
 
 def xmlresponse(f):
     @wraps(f)

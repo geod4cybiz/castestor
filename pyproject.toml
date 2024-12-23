@@ -15,4 +15,5 @@ dependencies = [
     "flask-wtf>=1.2.2",
     "flask-babel>=4.0.0",
     "flask-security>=5.5.2",
+    "flask-caching>=2.3.0",
 ]
