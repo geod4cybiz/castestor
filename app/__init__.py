@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask,render_template
 import logging
 from logging.handlers import RotatingFileHandler
 from logging import Formatter
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_babel import Babel
+from flask_login import current_user
 
 app = Flask(__name__)
 
@@ -37,3 +38,12 @@ babel = Babel(app)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     return cas_login()
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    return cas_logout()
+
+@app.route('/')
+def home():
+    authenticated = current_user.is_authenticated if current_user else False
+    return render_template('home.html',authenticated=authenticated)

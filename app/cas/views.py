@@ -8,12 +8,12 @@ from time import time
 from functools import wraps
 import jwt
 
-import os
-from os import path
+# import os
+# from os import path
 from app import app
 
 from app.cas.forms import LoginForm
-from app.cas.security import SessionManagerInterface
+# from app.cas.security import SessionManagerInterface
 from app.cas.models import User
 
 from flask_login import (LoginManager,login_required, login_user, logout_user)
@@ -21,6 +21,11 @@ from flask_login import (LoginManager,login_required, login_user, logout_user)
 from passlib.hash import bcrypt
 
 logger = app.logger
+CAS_ALLOWED_SERVICES = [
+	'/',
+	'http://localhost:'
+]
+
 
 urls = Blueprint('cas', __name__, url_prefix='/cas')
 
@@ -60,6 +65,8 @@ def login():
 
     qs = request.args
     service = qs.get('service','/')
+    if service not in CAS_ALLOWED_SERVICES:
+        abort(403)
 
     form = LoginForm(request.form)
     error = None
