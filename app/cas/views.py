@@ -112,9 +112,10 @@ def service_validate():
 
     userid = int(data.get('userid',0))
     user = load_user(userid)
-    if user is not None:
+    if user is not None: 
+        # TODO other user attributes (lastname, firstname, etc...)   
         return render_template('cas/success.xml', 
-            username = user.username)
+            username = user.email)
 
     return render_template('cas/error.xml', 
         error= {
