@@ -1,4 +1,4 @@
-FROM python:3.11.6-slim-bullseye as builder
+FROM python:3.11.6-slim-bullseye AS builder
 
 ENV TZ=Europe/Paris
 ENV DEBIAN_FRONTEND=noninteractive
@@ -20,8 +20,20 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EOT
 
 FROM python:3.11.6-alpine
+
+ARG UID
+ARG GID
+ARG UNAME
+
 COPY --from=builder /app /app
+RUN <<EOT
+addgroup -S -g ${GID} ${UNAME}
+adduser -S -u ${UID} -g ${GID} ${UNAME}
+chown -R ${UID}:${GID} /app
+EOT
+
 WORKDIR /app
 ENV PATH=/app/venv/bin:$PATH
+USER ${UNAME}
 
 CMD [ "gunicorn", "app:app" ]
