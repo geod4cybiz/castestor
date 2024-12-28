@@ -12,6 +12,7 @@ RUN <<EOT
 python3 -m venv venv
 export PATH=/app/venv/bin:$PATH
 pip install pip -U
+pip install uv
 pip install --no-cache-dir -r requirements.txt
 # apt remove -y build-essential
 # apt autoremove
