@@ -22,10 +22,7 @@ from flask_login import (LoginManager, login_user, logout_user)
 from passlib.hash import bcrypt
 
 logger = app.logger
-CAS_ALLOWED_SERVICES = [
-	'/',
-	'http://localhost:'
-]
+CAS_ALLOWED_SERVICES = app.config.get('CAS_ALLOWED_SERVICES',['/'])
 
 
 urls = Blueprint('cas', __name__, url_prefix='/cas')

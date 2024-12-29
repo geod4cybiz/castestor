@@ -33,3 +33,10 @@ CACHE_DIR = os.path.join(DATA_DIR,'cache')
 if not os.path.isdir(CACHE_DIR):
     	os.makedirs(CACHE_DIR)
 
+CAS_ALLOWED_SERVICES = [
+	'/',
+	'http://localhost',
+    'https://www.example.com',
+    'https://www.example.org',
+    'https://www.example.net',
+]
