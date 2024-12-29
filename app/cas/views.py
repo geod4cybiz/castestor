@@ -17,7 +17,7 @@ from app.cas.security import gen_ticket,decode_ticket
 
 from app.cas.models import User
 
-from flask_login import (LoginManager, login_user, logout_user)
+from flask_login import (LoginManager, login_user, logout_user,current_user)
 
 from passlib.hash import bcrypt
 
@@ -65,6 +65,13 @@ def login():
     service = qs.get('service','/')
     if service not in CAS_ALLOWED_SERVICES:
         abort(403)
+
+    if current_user.is_authenticated:
+        user = load_user(current_user.get_id())
+        if user:
+            t = gen_ticket(user,service)
+            return redirect('%s?ticket=%s' % (service,t))
+
 
     form = LoginForm(request.form)
     error = None
